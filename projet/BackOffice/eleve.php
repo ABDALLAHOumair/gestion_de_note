@@ -2,6 +2,10 @@
 require_once(__DIR__ .'/header.php');
 require_once(__DIR__ .'/connectiondatabase.php'); 
 
+
+/*
+ Condition d'ajout d'un élève et requête SQl de l'ajout d'un élève
+ */
 if (isset($_POST['prenom_eleve']) 
     && ($_POST['nom_eleve']) 
     && ($_POST['classe']) 
@@ -20,17 +24,25 @@ if (isset($_POST['prenom_eleve'])
 
 }
 
+/*
+Requête SQl selectionnant toute les valeurs de la table eleves et faisant la jointure avec la table classes
+*/
 $selecteleve= 'SELECT elv.Id,cls.Nom_Classe, elv.Nom, elv.Prenom FROM eleves elv
 JOIN classes cls ON elv.Id_Classe=cls.Id';
 $selection_eleve= $mysqlClient->prepare($selecteleve);
 $selection_eleve->execute();
 $liste_eleves=$selection_eleve->fetchAll();
 
+
+/*
+Requête SQl selectionnant toute les valeurs de la table classes
+*/
 $selectclasse= 'SELECT * FROM classes';
 $selection_classe= $mysqlClient->prepare($selectclasse);
 $selection_classe->execute();
 $liste_classe=$selection_classe->fetchAll(); 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -51,6 +63,8 @@ $liste_classe=$selection_classe->fetchAll();
     <div>
         <?php require_once(__DIR__ .'/header.php');?>
         <h1>Ajouter un élève</h1>
+
+        <!-- Formulaitre d'ajout d'un eleve -->
         <form action='eleve.php' method='POST'>
             <label for='prenom'>Prénom</label>
             <input type='name' id='prenom' name='prenom_eleve' placeholder='ex: Alice'>
@@ -64,6 +78,8 @@ $liste_classe=$selection_classe->fetchAll();
             </select>
             <button type='submit'>Ajouter</button>
         </form>
+
+        <!-- Tableau regroupant les élèves -->
         <h1>Liste des élève</h1>
         <table>
             <tr>
@@ -97,6 +113,9 @@ $liste_classe=$selection_classe->fetchAll();
                     <td>
                         <?php echo $liste_eleves[$i]['Nom_Classe'];?>
                     </td>
+
+                    <td>
+                        <!-- Formulaire pour la modification de l'élève -->     
                         <form method="POST" action="page_de_modification.php?type=eleve">
                             <input type="hidden" name="id_eleve" value="<?php echo $liste_eleves[$i]['Id']?>">
                             <input type="hidden" name="nom_eleve" value="<?php echo $liste_eleves[$i]['Nom']?>">
@@ -105,7 +124,9 @@ $liste_classe=$selection_classe->fetchAll();
                             <td>
                                 <button type="submit" name="action">Éditer</button>
                             </td>
-                        </form>   
+                        </form>
+                        
+                        <!-- Formulaire pour la suppression de l'élève -->
                         <form method="POST" action="suppression.php?type=eleve">
                             <input type="hidden" name="id_eleve" value="<?php echo $liste_eleves[$i]['Id']?>">
                             <input type="hidden" name="nom_eleve" value="<?php echo $liste_eleves[$i]['Nom']?>">
@@ -115,8 +136,8 @@ $liste_classe=$selection_classe->fetchAll();
                                 <button type="submit" name="action">Supprimer</button>
                             </td>
                         </form>
-                    
-            </tr>
+                    </td>
+                </tr>
             <?php } ;?>
         </table><br>
     </div>

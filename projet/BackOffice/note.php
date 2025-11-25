@@ -2,6 +2,9 @@
 require_once(__DIR__ .'/header.php');
 require_once(__DIR__ .'/connectiondatabase.php'); 
 
+/*
+ Condition d'ajout d'une note et requête SQl de l'ajout d'une note 
+ */
 if (isset($_POST['note']) 
     && isset($_POST['date']) 
     && isset($_POST['eleve']) 
@@ -21,6 +24,10 @@ if (isset($_POST['note'])
     ]);
 }
 
+
+/*
+Requête SQl selectionnant le nom, prenom, le note et la matiere de la table notes et faisant la jointure avec les tables eleves et matieres 
+*/
 $selectnote= 'SELECT elv.Nom, elv.Prenom, nte.Id, nte.Note, mtr.Nom_Matiere, Date
 FROM notes nte
 JOIN eleves elv ON nte.Id_Eleve = elv.Id
@@ -29,17 +36,27 @@ $selection_note= $mysqlClient->prepare($selectnote);
 $selection_note->execute();
 $liste_notes=$selection_note->fetchAll();
 
+
+/*
+Requête SQl selectionnant le nom, prenom, le note et la classe de la table eleves et faisant la jointure avec la table classes 
+*/
 $selecteleve= 'SELECT elv.Id, cls.Nom_Classe, elv.Nom, elv.Prenom FROM eleves elv
 JOIN classes cls ON elv.Id_Classe=cls.Id';
 $selection_eleve= $mysqlClient->prepare($selecteleve);
 $selection_eleve->execute();
 $liste_eleves=$selection_eleve->fetchAll();
 
+
+/*
+Requête SQl selectionnant toute les valeurs de la table matieres
+*/
 $selectmatiere= 'SELECT * FROM matieres';
 $selection_matiere= $mysqlClient->prepare($selectmatiere);
 $selection_matiere->execute();
 $liste_matiere=$selection_matiere->fetchAll();
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -61,6 +78,7 @@ $liste_matiere=$selection_matiere->fetchAll();
         <?php require_once(__DIR__ .'/header.php');?>
         <h1>Ajouter une note</h1>
 
+        <!-- Formulaitre d'ajout d'une note -->
         <form action='note.php' method='post'>
             <label for='eleve'>Elève</label>
             <select name='eleve'>
@@ -81,6 +99,8 @@ $liste_matiere=$selection_matiere->fetchAll();
             <input type='date' name='date'/>
             <button type='submit'>ajouter</button>
         </form>
+
+        <!-- Tableau regroupant les notes -->
         <h1>Liste des notes</h1>
         <table>
             <tr>
@@ -120,6 +140,9 @@ $liste_matiere=$selection_matiere->fetchAll();
                     <td>
                         <?php echo $liste_notes[$i]['Date'];?>
                     </td>
+
+                    <td>
+                        <!-- Formulaire pour la modification de la note -->
                         <form method="POST" action="page_de_modification.php?type=note">
                             <input type="hidden" name="id_note" value="<?php echo $liste_notes[$i]['Id']?>">
                             <input type="hidden" name="nom_eleve" value="<?php echo $liste_notes[$i]['Nom']?>">
@@ -130,7 +153,9 @@ $liste_matiere=$selection_matiere->fetchAll();
                             <td>
                                 <button type="submit" name="action">Éditer</button>
                             </td>
-                        </form>   
+                        </form>  
+                        
+                        <!-- Formulaire pour la suppression de la note -->
                         <form method="post" action="suppression.php?type=note">
                             <input type="hidden" name="id_note" value="<?php echo $liste_notes[$i]['Id'] ?>">
                             <input type="hidden" name="nom_matiere" value="<?php echo $liste_notes[$i]['Nom_Matiere'] ?>">
@@ -140,6 +165,7 @@ $liste_matiere=$selection_matiere->fetchAll();
                                 <button type="submit" name="action">Supprimer</button>
                             </td>
                         </form>
+                    </td>
                 </tr>
             <?php } ;?>
         </table><br>

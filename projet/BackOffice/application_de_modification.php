@@ -2,6 +2,11 @@
 require_once(__DIR__ .'/connectiondatabase.php');
 require_once(__DIR__ . '/fonction.php');
 
+
+/*
+Requête SQL pour la modification de la matiere 
+ */
+
 if ($_GET['type'] === 'matiere') {
     if (isset($_POST['nouvelle_matiere']) && trim($_POST['nouvelle_matiere']) && !empty($_POST['nouvelle_matiere'])){
     $updatematiere=$mysqlClient->prepare('UPDATE matieres SET Nom_Matiere=:Nom_Matiere WHERE Id=:Id');
@@ -13,6 +18,10 @@ if ($_GET['type'] === 'matiere') {
     redirectToUrl('matiere.php');
 }
 
+
+/*
+Requête SQL pour la modification de la classe 
+ */
 elseif ($_GET['type'] === 'classe') {
     if (isset($_POST['nouvelle_classe']) && trim($_POST['nouvelle_classe']) && !empty($_POST['nouvelle_classe'])){
     $updateclasse=$mysqlClient->prepare('UPDATE classes SET Nom_Classe=:Nom_Classe WHERE Id=:Id');
@@ -24,6 +33,10 @@ elseif ($_GET['type'] === 'classe') {
     redirectToUrl('classe.php');
 }
 
+
+/*
+Requête SQL pour la modification de l'eleve 
+ */
 elseif ($_GET['type'] === 'eleve') {
     if ((isset($_POST['nouveau_nom']) && trim($_POST['nouveau_nom']) && !empty($_POST['nouveau_nom'])) && (isset($_POST['nouveau_prenom']) && trim($_POST['nouveau_prenom']) && !empty($_POST['nouveau_prenom']))){
     $updateeleve=$mysqlClient->prepare('UPDATE eleves SET Nom=:Nom, Prenom=:Prenom, Id_Classe=:Classe WHERE Id=:Id');
@@ -37,6 +50,10 @@ elseif ($_GET['type'] === 'eleve') {
     redirectToUrl('eleve.php');
 }
 
+
+/*
+Requête SQL pour la modification de la note
+ */
 elseif ($_GET['type'] === 'note') {
     if (isset($_POST['nouvelle_note']) && trim($_POST['nouvelle_note']) && !empty($_POST['nouvelle_note'])){
     $updatenote=$mysqlClient->prepare('UPDATE notes SET Note=:Note WHERE Id=:Id');

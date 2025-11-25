@@ -1,12 +1,21 @@
 <?php
+
 require_once(__DIR__ .'/header.php');
 require_once(__DIR__ .'/connectiondatabase.php');
 
+
+/*
+Reqûete SQl selectionnant toute les valeurs de la table classe
+*/
 $selectionSQL= 'SELECT * FROM classes';
 $selection_classe= $mysqlClient->prepare($selectionSQL);
 $selection_classe->execute();
 $liste_classe=$selection_classe->fetchAll(); 
 
+
+/*
+Page de modification pour la maatiere 
+*/
 if ($_GET['type'] === 'matiere') {
 ?>
     <h1>Modification de la matière</h1>
@@ -19,6 +28,7 @@ if ($_GET['type'] === 'matiere') {
 <?php } ?>
 
 
+<!-- Page de modification pour la classe -->
 <?php if ($_GET['type'] === 'classe') { ?>
     <h1>Modification de la classe</h1>
     <form action="application_de_modification.php?type=classe" method="POST">
@@ -30,6 +40,8 @@ if ($_GET['type'] === 'matiere') {
 <?php } ?>
 
 
+
+<!-- Page de modification pour l'élève-->
 <?php if ($_GET['type'] === 'eleve') { ?>
     <h1>Modification de l'élève</h1>
     <form action="application_de_modification.php?type=eleve" method="POST">
@@ -48,6 +60,8 @@ if ($_GET['type'] === 'matiere') {
     </form><br>
 <?php } ?>
 
+
+<!-- Page de modification pour l'élève -->
 <?php if ($_GET['type'] === 'note') {
 ?>
     <h1>Modification de la note</h1>

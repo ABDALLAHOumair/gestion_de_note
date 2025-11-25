@@ -2,6 +2,10 @@
 
 require_once ('/xampp/htdocs/projet/BackOffice/connectiondatabase.php');
 
+
+/*
+Requête SQl selectionnant le nom, prenom, le note, la classe et la matiere de la table notes et faisant la jointure avec les tables eleves, matieres et classes 
+*/
 $selectnote= 'SELECT elv.Nom, elv.Prenom,nte.Note,nte.Id_Eleve, mtr.Nom_Matiere, cls.Nom_Classe, Date
 FROM notes nte
 JOIN eleves elv ON nte.Id_Eleve = elv.Id
@@ -11,6 +15,10 @@ $selection_note= $mysqlClient->prepare($selectnote);
 $selection_note->execute();
 $liste_notes=$selection_note->fetchAll();
 
+
+/*
+Requête SQl selectionnant le nom, prenom, et la calsse de la table notes et faisant la jointure avec la table classes
+*/
 $selecteleve= 'SELECT elv.Id,cls.Nom_Classe, elv.Nom, elv.Prenom FROM eleves elv
 JOIN classes cls ON elv.Id_Classe=cls.Id';
 $selection_eleve= $mysqlClient->prepare($selecteleve);
@@ -41,6 +49,8 @@ $liste_eleves=$selection_eleve->fetchAll();
             <li><a href="eleve.php">Eleves</a></li>
         </ul>
     </nav>
+
+    <!-- Formulaire de selection d'un élève -->
     <form action="eleve.php" method="post">
         <label>Veuillez selectionner l'élève que vous souhaitez voir ses notes:
         <select name='eleve'>
@@ -57,6 +67,8 @@ $liste_eleves=$selection_eleve->fetchAll();
 
             else {
             ?>
+
+            <!-- Tableau regroupant les notes de l'élève -->
             <table>
                 <tr> 
                     <th>Classe</th>
