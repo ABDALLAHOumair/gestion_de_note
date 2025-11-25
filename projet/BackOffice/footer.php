@@ -1,0 +1,1 @@
+<footer>© 2025 - Mini-projet SLAM</footer>
