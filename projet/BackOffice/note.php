@@ -141,7 +141,6 @@ $liste_matiere=$selection_matiere->fetchAll();
                         <?php echo $liste_notes[$i]['Date'];?>
                     </td>
 
-                    <td>
                         <!-- Formulaire pour la modification de la note -->
                         <form method="POST" action="page_de_modification.php?type=note">
                             <input type="hidden" name="id_note" value="<?php echo $liste_notes[$i]['Id']?>">
@@ -165,7 +164,7 @@ $liste_matiere=$selection_matiere->fetchAll();
                                 <button type="submit" name="action">Supprimer</button>
                             </td>
                         </form>
-                    </td>
+                    
                 </tr>
             <?php } ;?>
         </table><br>

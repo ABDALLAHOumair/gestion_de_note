@@ -81,7 +81,7 @@ require_once(__DIR__ .'/header.php');
                         <td>
                             <?php echo $liste_matiere[$i]['Nom_Matiere'];?>
                         </td>
-                        <td>
+                        
                             <!-- Formulaire pour la modification de la matiere -->
                             <form method="POST" action="page_de_modification.php?type=matiere">
                                 <input type="hidden" name="id_matiere" value="<?php echo $liste_matiere[$i]['Id']?>">
@@ -99,7 +99,7 @@ require_once(__DIR__ .'/header.php');
                                     <button type="submit" name="action">Supprimer</button>
                                 </td>
                             </form>
-                        </td>
+                        
                     </tr>
                 <?php } ;?>
         </table><br>

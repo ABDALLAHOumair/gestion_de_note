@@ -80,8 +80,6 @@ $liste_classe=$selection_classe->fetchAll();
                     <td>
                         <?php echo $liste_classe[$i]['Nom_Classe'];?>
                     </td>
-
-                    <td>
                         <!-- Formulaire pour la modification de la classe -->
                         <form method="POST" action="page_de_modification.php?type=classe">
                             <input type="hidden" name="id" value="<?php echo $liste_classe[$i]['Id']?>">
@@ -98,8 +96,7 @@ $liste_classe=$selection_classe->fetchAll();
                             <td>
                                 <button type="submit" name="action">Supprimer</button>
                             </td>
-                        </form>
-                    </td>  
+                        </form> 
                 </tr>
             <?php } ;?>
         </table><br>

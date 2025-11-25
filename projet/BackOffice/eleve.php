@@ -114,7 +114,6 @@ $liste_classe=$selection_classe->fetchAll();
                         <?php echo $liste_eleves[$i]['Nom_Classe'];?>
                     </td>
 
-                    <td>
                         <!-- Formulaire pour la modification de l'élève -->     
                         <form method="POST" action="page_de_modification.php?type=eleve">
                             <input type="hidden" name="id_eleve" value="<?php echo $liste_eleves[$i]['Id']?>">
@@ -136,7 +135,7 @@ $liste_classe=$selection_classe->fetchAll();
                                 <button type="submit" name="action">Supprimer</button>
                             </td>
                         </form>
-                    </td>
+                    
                 </tr>
             <?php } ;?>
         </table><br>
